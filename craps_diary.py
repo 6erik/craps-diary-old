@@ -16,10 +16,11 @@ def ask_roll(die_num):
             
 
 session_over = 0
-game_number = 0
+round_number = 0
 
 while (session_over == 0):
 
+    round_number += 1
     round_over = 0
     roll_number = 0
     point = 0
@@ -31,9 +32,10 @@ while (session_over == 0):
         print("Exiting...")
     
     while (round_over == 0 and session_over == 0):
+    
         roll_number += 1
         
-        print("\nRoll #", roll_number, sep='')
+        print("\nRound ", round_number, " - Roll ", roll_number, " - Point ", point, sep='')
        
         die1 = ask_roll(1)
         die2 = ask_roll(2)
@@ -43,29 +45,37 @@ while (session_over == 0):
         
         print(dice_total)
         
+        # if comeout roll
         if (roll_number == 1):
+            # if craps -- don't pass win
             if (dice_total == 2 or dice_total == 3):
                 round_over = 1
-                print("Craps")
+                print("Result: Craps")
                 
+            # if craps -- don't pass push
             elif (dice_total == 12):
                 round_over = 1
-                print("Craps")
+                print("Result: Craps")
                 
+            # if natural -- pass win
             elif (dice_total == 7 or dice_total == 11):
                 round_over = 1
-                print("Natural")
+                print("Result: Natural")
                 
+            # else point is established    
             else:
                 point = dice_total
-            
+        
+        # else after first roll
         else:
+            # if point -- pass win
             if (dice_total == point):
                 round_over = 1
-                print("Point")
-            
+                print("Result: Point")
+                
+            # if 7 -- don't pass win
             elif (dice_total == 7):
                 round_over = 1
-                print("7 Out")
+                print("Result: 7 Out")
     
     
