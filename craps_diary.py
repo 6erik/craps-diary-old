@@ -1,9 +1,6 @@
 from roll import Roll
 
-game_over = 0
-roll_number = 0
-point = 0
-
+# function to get valid roll values
 def ask_roll(die_num):
     while True:
         try:
@@ -16,41 +13,59 @@ def ask_roll(die_num):
             return die_value
         else: # if input integer is not in 1-6 range
             print("Invalid value entry.")
+            
 
-while (game_over == 0):
-    roll_number += 1
+session_over = 0
+game_number = 0
+
+while (session_over == 0):
+
+    round_over = 0
+    roll_number = 0
+    point = 0
     
-    print("\nRoll #", roll_number, sep='')
-   
-    die1 = ask_roll(1)
-    die2 = ask_roll(2)
+    user_input = input("Record a round? ('N' to exit) ").upper()
     
-    roll = Roll(die1, die2)
-    dice_total = roll.get_dice_total();
+    if (user_input == 'N'):
+        session_over = 1
+        print("Exiting...")
     
-    print(dice_total)
-    
-    if (roll_number == 1):
-        if (dice_total == 2 or dice_total == 3):
-            game_over = 1
-            print("Craps")
-            
-        elif (dice_total == 12):
-            game_over = 1
-            print("Craps")
-            
-        elif (dice_total == 7 or dice_total == 11):
-            game_over = 1
-            print("Natural")
+    while (round_over == 0 and session_over == 0):
+        roll_number += 1
+        
+        print("\nRoll #", roll_number, sep='')
+       
+        die1 = ask_roll(1)
+        die2 = ask_roll(2)
+        
+        roll = Roll(die1, die2)
+        dice_total = roll.get_dice_total();
+        
+        print(dice_total)
+        
+        if (roll_number == 1):
+            if (dice_total == 2 or dice_total == 3):
+                round_over = 1
+                print("Craps")
+                
+            elif (dice_total == 12):
+                round_over = 1
+                print("Craps")
+                
+            elif (dice_total == 7 or dice_total == 11):
+                round_over = 1
+                print("Natural")
+                
+            else:
+                point = dice_total
             
         else:
-            point = dice_total
-        
-    else:
-        if (dice_total == point):
-            game_over = 1
-            print("Point")
-        
-        elif (dice_total == 7):
-            game_over = 1
-            print("7 Out")
+            if (dice_total == point):
+                round_over = 1
+                print("Point")
+            
+            elif (dice_total == 7):
+                round_over = 1
+                print("7 Out")
+    
+    
