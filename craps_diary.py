@@ -4,24 +4,26 @@ game_over = 0
 roll_number = 0
 point = 0
 
-while (game_over == 0):
+def ask_roll(die_num):
+    while True:
+        try:
+            print("Die #", die_num, ": ", sep='', end='')
+            die_value = int(input())
+        except ValueError: # if input is not an integer
+            print("Invalid value entry.")
+            continue
+        if (1 <= die_value <= 6):
+            return die_value
+        else: # if input integer is not in 1-6 range
+            print("Invalid value entry.")
 
-    valid_roll = 0
+while (game_over == 0):
     roll_number += 1
     
-    print("\nRoll #", roll_number)
-    die1 = int(input("Die 1: "))
-    die2 = int(input("Die 2: "))
-    
-    while (valid_roll == 0): 
-        if (die1 >= 1 and die1 <= 6 and die2 >= 1 and die2 <= 6):
-            valid_roll = 1
-        else:
-            print("Invalid roll values -- Try again")
-            die1 = int(input("Die 1: "))
-            die2 = int(input("Die 2: "))
-        
-    
+    print("\nRoll #", roll_number, sep='')
+   
+    die1 = ask_roll(1)
+    die2 = ask_roll(2)
     
     roll = Roll(die1, die2)
     dice_total = roll.get_dice_total();
