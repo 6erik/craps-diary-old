@@ -14,9 +14,10 @@ def ask_roll(die_num):
         else: # if input integer is not in 1-6 range
             print("Invalid value entry.")
             
-
 session_over = 0
 round_number = 0
+
+round_list = []
 
 while (session_over == 0):
 
@@ -25,24 +26,39 @@ while (session_over == 0):
     roll_number = 0
     point = 0
     
-    user_input = input("Record a round? ('N' to exit) ").upper()
+    roll_list = []
+    
+    user_input = input("\nRecord a round? ('N' to exit) ").upper()
     
     if (user_input == 'N'):
         session_over = 1
-        print("Exiting...")
-    
+        # print("Exiting...")
+        for j in range(len(round_list)):
+            print("-- Round ", j+1, "--", sep='')
+            temp_round = round_list[j]
+        
+            for i in range(len(temp_round)):
+                print("Roll ", i+1, ": ", sep='', end='')
+                temp_roll = temp_round[i]
+                temp_roll.print_dice()
+        
+        
     while (round_over == 0 and session_over == 0):
     
         roll_number += 1
         
         print("\nRound ", round_number, " - Roll ", roll_number, " - Point ", point, sep='')
        
+        # get user input for dice
         die1 = ask_roll(1)
         die2 = ask_roll(2)
         
+        # create Roll object with each die
         roll = Roll(die1, die2)
         dice_total = roll.get_dice_total();
         
+        # append every roll to a list
+        roll_list.append(roll)
         print(dice_total)
         
         # if comeout roll
@@ -77,5 +93,11 @@ while (session_over == 0):
             elif (dice_total == 7):
                 round_over = 1
                 print("Result: 7 Out")
-    
-    
+            
+        if (round_over == 1):
+            # append each list of rolls to a list
+            round_list.append(roll_list)
+            
+            for i in range(len(roll_list)):
+                print("Roll ", i+1, ": ", sep='', end='')
+                roll_list[i].print_dice()
