@@ -1,6 +1,6 @@
-# Roll class module
+# Round class module
 
-class Roll:
+class Round:
 
   # default constructor
   def __init__(self, die1, die2):
@@ -14,7 +14,7 @@ class Roll:
     return self.die2
    
   def print_dice(self):
-    print(self.die1, self.die2)
+    print(self.die1 + " " + self.die2)
     
   def get_dice_total(self):
     return (int(self.die1) + int(self.die2))
