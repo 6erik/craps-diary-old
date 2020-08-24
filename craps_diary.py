@@ -13,7 +13,32 @@ def ask_roll(die_num):
             return die_value
         else: # if input integer is not in 1-6 range
             print("Invalid value entry.")
-            
+
+# function to find money won if field was bet every opportunity
+def check_field_winnings(session):
+    sum = 0
+    
+    for j in range(len(session)):
+            #print("-- Round ", j+1, "--", sep='')
+            round = session[j]
+        
+            for i in range(len(round)):
+                roll = round[i]
+                d_total = roll.get_dice_total()
+                #print("Roll ", i+1, ": ", d_total, sep='')
+                
+                if (d_total == 2):
+                    sum += 2
+                elif (d_total == 3 or d_total == 4 or d_total == 9 or d_total == 10 or d_total == 11):
+                    sum += 1
+                elif (d_total == 12):
+                    sum += 3
+                else:
+                    sum -= 1
+                    
+    print("Field Winnings:", sum)
+    
+           
 session_over = 0
 round_number = 0
 
@@ -41,6 +66,8 @@ while (session_over == 0):
                 print("Roll ", i+1, ": ", sep='', end='')
                 temp_roll = temp_round[i]
                 temp_roll.print_dice()
+                
+        check_field_winnings(round_list)
         
         
     while (round_over == 0 and session_over == 0):
