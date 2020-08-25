@@ -19,13 +19,12 @@ def check_field_winnings(session):
     sum = 0
     
     for j in range(len(session)):
-            #print("-- Round ", j+1, "--", sep='')
+    
             round = session[j]
         
             for i in range(len(round)):
                 roll = round[i]
                 d_total = roll.get_dice_total()
-                #print("Roll ", i+1, ": ", d_total, sep='')
                 
                 if (d_total == 2):
                     sum += 2
@@ -37,7 +36,33 @@ def check_field_winnings(session):
                     sum -= 1
                     
     print("Field Winnings:", sum)
+
+# function to find money won if hardway bets placed every opportunity
+def check_hardway_winnings(session):
+    sum = 0
+   
+    for j in range(len(session)):
     
+            round = session[j]
+            
+            # loop skips comeout roll (index 0)
+            for i in range(1, len(round)):
+                roll = round[i]
+                d_total = roll.get_dice_total()
+                
+                d_1 = roll.get_die1()
+                d_2 = roll.get_die2()
+
+                if (d_1 == d_2):
+                    if (d_total == 4 or d_total == 10):
+                        sum += 10
+                    elif (d_total == 6 or d_total == 8):
+                        sum += 8
+                else:
+                    if (d_total == 7 or d_total == 4 or d_total == 6 or d_total == 8 or d_total == 10):
+                        sum -= 1
+                    
+    print("All Hardway Winnings:", sum)
            
 session_over = 0
 round_number = 0
@@ -68,7 +93,7 @@ while (session_over == 0):
                 temp_roll.print_dice()
                 
         check_field_winnings(round_list)
-        
+        check_hardway_winnings(round_list)
         
     while (round_over == 0 and session_over == 0):
     
