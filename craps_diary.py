@@ -1,4 +1,5 @@
 from roll import Roll
+from prettytable import PrettyTable
 
 # function to get valid roll values
 def ask_roll(die_num):
@@ -63,7 +64,85 @@ def check_hardway_winnings(session):
                         sum -= 1
                     
     print("All Hardway Winnings:", sum)
-           
+ 
+def check_freqs(session):
+ 
+    # array to hold frequency of roll totals (2-12)
+    freq_total = [0] * 13
+    
+    # array to hold frequency of each die (1-6)
+    freq_die = [0] * 7
+    
+    for j in range(len(session)):
+        
+        round = session[j]
+        
+        for i in range(0, len(round)):
+            roll = round[i]
+            d_total = roll.get_dice_total()
+            
+            d_1 = roll.get_die1()
+            d_2 = roll.get_die2()
+            
+            freq_total[d_total] += 1
+            freq_die[d_1] += 1
+            freq_die[d_2] += 1
+    
+    # print freq_total
+    print("-- Total frequencies --", end='')
+    for i in range(1, 13):
+        print(i, ": ", freq_total[i], ", ", sep='', end=' ')
+    
+    print("\nDie frequencies: ", end='')
+    # print freq_die
+    for i in range(1, 7):
+        print(i, ": ", freq_die[i], ", ", sep='', end=' ')
+        
+def check_freqs_tables(session):
+ 
+    # array to hold frequency of roll totals (2-12)
+    freq_total = [0] * 13
+    
+    # array to hold frequency of each die (1-6)
+    freq_die = [0] * 7
+    
+    for j in range(len(session)):
+        
+        round = session[j]
+        
+        for i in range(0, len(round)):
+            roll = round[i]
+            d_total = roll.get_dice_total()
+            
+            d_1 = roll.get_die1()
+            d_2 = roll.get_die2()
+            
+            freq_total[d_total] += 1
+            freq_die[d_1] += 1
+            freq_die[d_2] += 1
+    
+    # print freq_total
+    print("\n Roll total frequencies: ")
+    table_freq_total = PrettyTable(['Total', 'Freq', 'Total2', 'Freq2'])
+    table_freq_total.add_row([1, "--", 7, freq_total[7]])
+    table_freq_total.add_row([2, freq_total[2], 8, freq_total[8]])
+    table_freq_total.add_row([3, freq_total[3], 9, freq_total[9]])
+    table_freq_total.add_row([4, freq_total[4], 10, freq_total[10]])
+    table_freq_total.add_row([5, freq_total[5], 11, freq_total[11]])
+    table_freq_total.add_row([6, freq_total[6], 12, freq_total[12]])
+    print(table_freq_total)
+    
+    # print freq_die
+    print("Die frequencies: ")
+    table_freq_die = PrettyTable(['Value', 'Freq'])
+    table_freq_die.add_row([1, freq_die[1]])
+    table_freq_die.add_row([2, freq_die[2]])
+    table_freq_die.add_row([3, freq_die[3]])
+    table_freq_die.add_row([4, freq_die[4]])
+    table_freq_die.add_row([5, freq_die[5]])
+    table_freq_die.add_row([6, freq_die[6]])
+    print(table_freq_die)
+    
 session_over = 0
 round_number = 0
 
@@ -94,6 +173,7 @@ while (session_over == 0):
                 
         check_field_winnings(round_list)
         check_hardway_winnings(round_list)
+        check_freqs_tables(round_list)
         
     while (round_over == 0 and session_over == 0):
     
